@@ -3,13 +3,15 @@ filetype off                  " required
 syntax enable
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
+set tags=tags
+autocmd BufRead *.rs :setlocal tags=./rusty-tags.vi;/
 call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
-
+Plugin 'gruvbox-community/gruvbox'
 " The following are examples of dSyntax onifferent formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
@@ -47,30 +49,8 @@ Plugin 'itchyny/lightline.vim'
 
 Plugin 'commentary.vim'
 
-Plugin 'Syntastic'
-
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 1
-let g:cpp_class_scope_highlight=1
-let g:cpp_class_member_variable_highlight=1
-let g:cpp_class_decl_highlight=1
-"let g:syntastic_cpp_checkers = ['gcc']
-"let g:syntastic_cpp_compiler = 'gcc'
-"let g:syntastic_cpp_compiler_option = 'std=c++14'
 
 Plugin 'jiangmiao/auto-pairs'
-
-Plugin 'Valloric/YouCompleteMe'
-"let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
-"let g:ycm_show_diagnostic_ui=0
-"let g:ycm_autoclose_preview_window_after_insertion = 1
-"let g:ycm_autoclose_preview_window_after_completion = 1
 
 " Track the engine.
 Plugin 'SirVer/ultisnips'
@@ -88,6 +68,23 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
 
+Plugin 'rust-lang/rust.vim'
+" Plugin 'neoclide/coc.nvim', {'branch': 'release'}
+" let g:coc_disable_startup_warning = 1
+
+Plugin 'dense-analysis/ale'
+" let g:ale_sign_column_always = 1
+" let g:ale_lint_on_save = 1
+Plugin 'https://github.com/bfrg/vim-cpp-modern'
+
+let g:cpp_function_highlight = 1
+let g:cpp_attributes_highlight = 1
+let g:cpp_member_highlight = 1
+let g:cpp_simple_highlight = 1
+
+Plugin 'https://github.com/ctrlpvim/ctrlp.vim'
+" ignore files in .gitignore
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -106,38 +103,52 @@ filetype plugin indent on    " required
 " Setting for Personal reasons
 set exrc
 set mouse=a
+"set relativenumber
+set number
 set tabstop=4
+set softtabstop=4
 set shiftwidth=4
 set guifont=Menlo\ Regular:h14
-colorscheme desert
 
-set smarttab
+set noerrorbells
 set showcmd
 set autoindent
 set smartindent
 set cindent
 set clipboard=unnamedplus
-set hlsearch
+set nohlsearch
+set incsearch
+set nobackup
+set noswapfile
+set relativenumber
 
 set laststatus=2
 set path+=**
 set wildmenu
+set scrolloff=8
+set signcolumn=yes
 
 " set cursorline
 set showcmd
-set number
 set autowrite
 set autoread
 set textwidth=109
 " set colorcolumn=110
 highlight ColorColumn ctermbg= darkgray
+set t_Co=256
+colorscheme gruvbox
 set backspace=indent,eol,start
 set nowrap
 set splitbelow
 set splitright
 set lazyredraw
+
+
+
 "customized snippets
-nnoremap ,tcpp :-1read ~/Documents/C++\ Programs/compcpptemp.cpp<CR>42j
+nnoremap ,tcpp :-1read ~/code/competitive_programing/comptemp1.cpp<CR>42j
+nnoremap ,tpy :-1read ~/code/competitive_programing/comptemp.py<CR>5j
+nnoremap ,tjava :-1read ~/code/competitive_programing/comptemp.java<CR>5j
 nnoremap ,tusaco :-1read ~/Documents/C++\ Programs/tusaco.cpp<CR>47j
 nnoremap ,<F2> :SyntasticCheck<CR>
 nnoremap ,<F3> :SyntasticReset<CR>
